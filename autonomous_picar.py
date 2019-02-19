@@ -52,7 +52,7 @@ def autonomy():
             gpg.stop()
             directionFinder()
             
-MIN_DISTANCE = 70 #minium distance from object in centimeters
+MIN_DISTANCE = 70 #minium allowed distance from a object in centimeters
 gpg = easy.EasyGoPiGo3() #instatiating a EasyGoPiGo3 object
 dist_sensor = gpg.init_distance_sensor() #instance of the Distance Sensor class
 servo = gpg.init_servo() #instance of the Servo class
