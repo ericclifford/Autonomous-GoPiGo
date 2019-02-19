@@ -56,10 +56,8 @@ MIN_DISTANCE = 70 #minium distance from object in centimeters
 gpg = easy.EasyGoPiGo3() #instatiating a EasyGoPiGo3 object
 dist_sensor = gpg.init_distance_sensor() #instance of the Distance Sensor class
 servo = gpg.init_servo() #instance of the Servo class
-try:
-    gpg.stop()
-    servo.reset_servo()
-    time.sleep(2)
-    autonomy()
-except:
-    cleanup()
+
+gpg.stop()
+servo.reset_servo()
+time.sleep(2)
+autonomy()
