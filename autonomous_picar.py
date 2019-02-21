@@ -23,10 +23,10 @@ def directionFinder():
     # direction to point the car next.
 
     if right_obj_dist > left_obj_dist and right_obj_dist > MIN_DISTANCE:
-        gpg.right()
+        gpg.turn_degrees(90)
         
     elif left_obj_dist > right_obj_dist and left_obj_dist > MIN_DISTANCE:
-        gpg.left()
+        gpg.turn_degrees(-90)
 
     else:
         gpg.backward()
