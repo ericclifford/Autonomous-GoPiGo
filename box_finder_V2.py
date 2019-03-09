@@ -23,14 +23,14 @@ def route_car(move_dist):
         current_time_moving += time.time()
         #approaching a box. continusly scan forward until box is reached
         if approaching_box:
-            object_distance = scan(90)
+            object_distance = distance_finder(90)
             #path is ending. stop car
             if object_distance <= MIN_DETECTION_RANGE:
                 print("Object detected in front of car.")
                 return 0
         #not approaching box. continusly scan 30, 60, and 90 degrees until a box is found or path ends
         elif not approaching_box:
-            object_distance = scan( servo_position = servo_position % 90 + 30 )
+            object_distance = distance_finder( servo_position = servo_position % 90 + 30 )
             #path is ending. stop car
             if servo_position == 90 and object_distance <= MIN_DETECTION_RANGE:
                 print("Object detected in front of car.")
@@ -55,7 +55,7 @@ servo_position = 60 #degrees
 MAX_DETECTION_RANGE = 150 #cm
 MIN_DETECTION_RANGE = 30 #cm
 box_count = 0
-first_pass_time = -1 #inialize to a number greater than 0
+first_pass_time = -1 #inialize to a number less than 0
 current_time_moving = 0
 
 #program executes until robot car returns to its starting position
