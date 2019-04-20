@@ -37,7 +37,7 @@ def route_car(move_dist):
                 print("Object detected in front of car.")
                 return 0
             #a box was located in detectable range. position car beside it.
-            elif servo_position != 90 and object_distance <= MAX_BOX_DETECTION_RANGE:
+            elif servo_position != 90 and object_distance <= MAX_DETECTION_RANGE:
                 print("Box has been detected.")
                 box_count += 1
                 approaching_box = True
@@ -79,4 +79,4 @@ while current_time_moving != first_pass_time:
         
     print("Car is stopped.")
 
-print("Car has returned to starting position." + box_count + " boxes found.")
+print("Car has returned to starting position. " + str(box_count) + " boxes found.")
