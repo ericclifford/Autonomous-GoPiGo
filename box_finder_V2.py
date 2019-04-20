@@ -9,30 +9,31 @@ def distance_finder(servo_position):
     obj_distance = dist_sensor.read()
     #frontward object distance
     if servo_position == 90:
-        return object_dist
+        return obj_distance
     #rightward object distance
     else:
-        return object_distance * math.sin(servo_position)
+        return obj_distance * math.sin(servo_position * math.pi / 180)
 
 
 def route_car(move_dist):
+    global current_time_moving, box_count, servo_position,approaching_box
     gpg.move_cm(move_dist, False)
     time.sleep(0.5)
     #loop executes until car comes to a stop
-    while gpg.get_speed > 0:
+    while gpg.get_speed() > 0:
         current_time_moving += time.time()
         #approaching a box. continusly scan forward until box is reached
         if approaching_box:
-            object_distance = distance_finder(90)
             #path is ending. stop car
-            if object_distance <= MIN_DETECTION_RANGE:
+            if distance_finder(90) <= MAX_DETECTION_RANGE:
                 print("Object detected in front of car.")
                 return 0
         #not approaching box. continusly scan 30, 60, and 90 degrees until a box is found or path ends
         elif not approaching_box:
-            object_distance = distance_finder( servo_position = servo_position % 90 + 30 )
+	    servo_position = servo_position % 90 + 30
+            object_distance = distance_finder(servo_position)
             #path is ending. stop car
-            if servo_position == 90 and object_distance <= MIN_DETECTION_RANGE:
+            if servo_position == 90 and object_distance <= MAX_DETECTION_RANGE:
                 print("Object detected in front of car.")
                 return 0
             #a box was located in detectable range. position car beside it.
@@ -40,20 +41,19 @@ def route_car(move_dist):
                 print("Box has been detected.")
                 box_count += 1
                 approaching_box = True
-                gpg.move_cm(object_distance, False)
+                gpg.move_cm(object_distance / math.tan(servo_position * math.pi / 180), False)
             #box not found and end of path has not been reached. continue forward
             else:
-                gpg.foward()
+                gpg.forward()
     #box has been reached. stop car.
-    return MAX_DETECTION_RANGE
+    return 0
 	
 gpg = easy.EasyGoPiGo3() #instatiating EasyGoPiGo3 object
 dist_sensor = gpg.init_distance_sensor() #instance of the Distance Sensor class
 servo = gpg.init_servo() #instance of the Servo class
 servo.rest()
 servo_position = 60 #degrees
-MAX_DETECTION_RANGE = 150 #cm
-MIN_DETECTION_RANGE = 30 #cm
+MAX_DETECTION_RANGE = 50 #cm
 box_count = 0
 first_pass_time = -1 #inialize to a number less than 0
 current_time_moving = 0
@@ -65,10 +65,10 @@ while current_time_moving != first_pass_time:
     fwd_distance = distance_finder(90)
 
     #not at the end of path. continue forward
-    if fwd_distance > MIN_DETECTION_RANGE:
+    if fwd_distance > MAX_DETECTION_RANGE:
         print("Car has started moving forward.")
         fwd_distance = route_car(fwd_distance)
-    elif fwd_distance <= MIN_DETECTION_RANGE and current_time_moving == 0:
+    elif fwd_distance <= MAX_DETECTION_RANGE and current_time_moving == 0:
         print("Car cannot begin route because object is blocking the way.")
     #car has reached the end of the path
     else:
