@@ -53,7 +53,7 @@ dist_sensor = gpg.init_distance_sensor() #instance of the Distance Sensor class
 servo = gpg.init_servo() #instance of the Servo class
 servo.rest()
 servo_position = 60 #degrees
-MAX_DETECTION_RANGE = 50 #cm
+MAX_DETECTION_RANGE = 150 #cm
 box_count = 0
 first_pass_time = -1 #inialize to a number less than 0
 current_time_moving = 0
