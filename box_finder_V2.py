@@ -32,7 +32,6 @@ def route_car(move_dist):
         elif not approaching_box:
 	    servo_position = servo_position % 90 + 30
             object_distance = distance_finder(servo_position)
-            #path is ending. stop car
             if servo_position == 90 and object_distance <= MAX_DETECTION_RANGE:
                 print("Object detected in front of car.")
                 return 0
