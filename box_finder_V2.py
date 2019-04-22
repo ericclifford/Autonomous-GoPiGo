@@ -22,13 +22,13 @@ def route_car(move_dist):
     #loop executes until car comes to a stop
     while gpg.get_speed() > 0:
         current_time_moving += time.time()
-        #approaching a box. continusly scan forward until box is reached
+        #approaching a box. continuously scan forward until box is reached
         if approaching_box:
             #path is ending. stop car
             if distance_finder(90) <= MAX_DETECTION_RANGE:
                 print("Object detected in front of car.")
                 return 0
-        #not approaching box. continusly scan 30, 60, and 90 degrees until a box is found or path ends
+        #not approaching box. continuously scan 30, 60, and 90 degrees until a box is found or path ends
         elif not approaching_box:
 	    servo_position = servo_position % 90 + 30
             object_distance = distance_finder(servo_position)
@@ -47,14 +47,14 @@ def route_car(move_dist):
     #box has been reached. stop car.
     return 0
 	
-gpg = easy.EasyGoPiGo3() #instatiating EasyGoPiGo3 object
+gpg = easy.EasyGoPiGo3() #instantiating EasyGoPiGo3 object
 dist_sensor = gpg.init_distance_sensor() #instance of the Distance Sensor class
 servo = gpg.init_servo() #instance of the Servo class
 servo.rest()
 servo_position = 60 #degrees
 MAX_DETECTION_RANGE = 150 #cm
 box_count = 0
-first_pass_time = -1 #inialize to a number less than 0
+first_pass_time = -1 #initialize to a number less than 0
 current_time_moving = 0
 
 #program executes until robot car returns to its starting position
