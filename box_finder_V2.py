@@ -73,7 +73,7 @@ while current_time_moving != first_pass_time:
     else:
         print("Car is turning around.")
         gpg.turn_degrees(180)
-        first_pass_time = current_pass_time
+        first_pass_time = current_time_moving
         current_time_moving = 0
         
     print("Car is stopped.")
