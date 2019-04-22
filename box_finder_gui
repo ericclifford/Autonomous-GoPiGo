@@ -1,0 +1,33 @@
+# Simple GUI for BoxFinder GoPiGo Project
+# Built with Tkinter framework
+
+from tkinter import *
+
+# Window of GUI
+window = Tk()
+window.title("GoPiGo Box Finder")
+window.geometry('300x300')        # Size
+window.configure(background = 'blue')
+
+# Label
+lbl = Label(window, text="Pick A Program!", bg = 'blue', font = 'Helvetica 20 bold')
+lbl.place(relx=0.5, rely=0.25, anchor=CENTER)
+
+# Button 1 Functionality
+def op1():
+  import box_finder_V2
+
+# Button 2 Functionality
+def op2():
+  import box_finder
+
+# Button 1 for one-directional scanning
+btn = Button(window, text='Single Direction Scan', command=op1)
+btn.place(relx=0.5, rely=0.5, anchor=CENTER)
+
+# Button 2 for multi-directional scanning
+btn2 = Button(window, text='Multi Direction Scan', command=op2)
+btn2.place(relx=0.5, rely=0.75, anchor=CENTER)
+
+# Run App
+window.mainloop()
